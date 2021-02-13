@@ -1,0 +1,65 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Application Title",
+      "description": "Application Description"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:1234",
+        "description": "Your local application server"
+      }
+    ],
+    "paths": {
+      "/registration": {
+        "post": {
+          "tags": [
+            "'Registration'"
+          ],
+          "request": {
+            "email": "string",
+            "password": "string"
+          },
+          "responses": {
+            "200": {
+              "email": "string",
+              "token": "string"
+            },
+            "400": {
+              "message": "400 error"
+            },
+            "500": {
+              "message": "500 error"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+        "post": {
+          "tags": ["'Login'"],
+          "request": {
+            "email": "string",
+            "password": "string"
+          },
+          "responses": {
+            "200": {
+              "email": "string",
+              "token": "string"
+            },
+            "400": {
+              "message": "400 Bad Request"
+            },
+            "401": {
+              "message": "401 Unauthorized"
+            },
+            "500": {
+              "message": "Internal Server Error"
+            }
+          }
+        }
+      }
+
+  }
+  
