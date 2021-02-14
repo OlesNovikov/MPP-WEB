@@ -8,28 +8,27 @@ export class RequestService {
         return [];
     }
 
-    action(request, response, next) {
+    async action(request, response, next) {
         return new Response({ message: "ok" });
     }
 
     async process(request, response, next) {
         try {
-            console.log(1);
             await DbConnector.connect();
             let validateErrors = this.validate(request).filter(error => error);
             if (validateErrors.length !== 0) {
-                console.log(validateErrors);
+                console.log(`Validate error, ${validateErrors}`);
                 send(response, new Response({ message: validateErrors, status: 400 }));
             }
 
-            console.log(2);
-            send(response, this.action(request, response, next));
-            console.log(3);
+            //console.log("response before: ", response.body);
+            let result = await this.action(request, response, next);
+            console.log(result);
+            send(response, result);
             await DbConnector.disconnect();
-            console.log(4);
         }
         catch(error) {
-            console.log(`Process error, ${error}`);
+            console.log(error);
             send(response, new Response({ message: error, status: 500 }));
         }
     }

@@ -17,7 +17,10 @@ export class RegistrationService extends RequestService {
     }
 
     async action(request, response, next) {
-        console.log(request.body);
-        return new Response(await new UserController().registrate(request.body));
+        let userController = new UserController();
+        let result = await userController.registrate(request.body);
+        let resp = new Response(result);
+        //console.log("response after: ", resp.body);
+        return resp;
     }
 }

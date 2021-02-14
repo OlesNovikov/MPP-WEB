@@ -15,7 +15,7 @@ export class DbConnector {
     static async connect() {
         try {
             await this.getSequelize().authenticate();
-            console.log('Connection has been established successfully.');
+            console.log('Connection to database has been established successfully.');
         }
         catch (error) {
             console.error('Unable to connect to the database:', error);
@@ -23,7 +23,7 @@ export class DbConnector {
     }
 
     static async disconnect() {
-        await this.sequelize.close();
-        console.log("Connection had been closed");
+        await this.sequelize.close();   // getSequelize()?
+        console.log("Connection to database had been closed");
     }
 }

@@ -9,8 +9,6 @@ export class UserController extends DbController{
     async registrate(model) {
         //console.log(model);
         let result = await this.create(User, model);
-        console.log(result instanceof User); 
-        console.log(result.id);
         return result;
     }
 }
