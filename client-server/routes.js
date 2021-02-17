@@ -1,5 +1,5 @@
-import express from 'express';
-import { userServices } from './app/services/user/index.js';
+import express, { request, response } from 'express';
+import { taskServices, userServices } from './app/services/user/index.js';
 
 export const router = express.Router();
 
@@ -11,3 +11,4 @@ router.get("/", (request, response, next) => {
 
 router.post("/registration", (request, response, next) => userServices.registration.process(request, response, next));
 router.post("/login", (request, response, next) => userServices.login.process(request, response, next));
+router.post("/createTask", (request, response, next) => taskServices.create.process(request, response, next));

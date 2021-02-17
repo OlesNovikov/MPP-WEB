@@ -1,24 +1,26 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import pkg from 'sequelize';
+const { DataTypes, Model } = pkg;
+import { DbConnector } from '../../configurations/dbConnector.js';
 
-const sequelize = new Sequelize('sqlite::memory:');
+export class Priority extends Model {}
 
-const Priority = sequelize.define('priorities', 
-{
+Priority.init({
   name: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  description: {
-    type: DataTypes.STRING
-  },
-  created_at: {
+  createdAt: {
     type: DataTypes.DATE,
-    allowNull: false
+    field: 'created_at',
+    allowNull: false,
   },
-  updated_at: {
+  updatedAt: {
     type: DataTypes.DATE,
-    allowNull: false
+    field: 'updated_at',
+    allowNull: false,
   }
-});
-
-console.log(Priority === sequelize.models.Priority);
+}, {
+    sequelize: DbConnector.getSequelize(),
+    modelName: 'Priority',
+    tableName: 'priorities'
+})

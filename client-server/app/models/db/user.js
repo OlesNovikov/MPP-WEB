@@ -1,5 +1,5 @@
 import pkg from 'sequelize';
-const { Sequelize, DataTypes, Model } = pkg;
+const { DataTypes, Model } = pkg;
 import { DbConnector } from '../../configurations/dbConnector.js';
 
 export class User extends Model {}
@@ -18,6 +18,9 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false,
     len: [8, 16],
+    get() {
+      return null;
+    }
   },
   createdAt: {
     type: DataTypes.DATE,

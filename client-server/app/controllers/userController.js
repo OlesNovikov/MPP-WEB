@@ -1,16 +1,27 @@
 import { DbController } from "./dbController.js";
 import { User } from '../models/db/user.js'
 
-export class UserController extends DbController{
+export class UserController extends DbController {
     constructor() {
         super();
     }
 
     async registrate(model) {
-        return await this.create(User, model);
+        return await this.findOrCreate(User, {
+            where: 
+            {
+                nickname: model.nickname, 
+                email: model.email,
+            },
+            defaults: model,
+        });
     }
 
     async logIn(model) {
-        return await this.read(User, model);
+        return await this.getList(User, {
+            where: {
+                email: model.email
+            }
+        });
     }
 }

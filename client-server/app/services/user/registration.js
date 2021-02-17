@@ -1,6 +1,5 @@
 import { Validator } from "../../configurations/validator.js";
 import { UserController } from "../../controllers/userController.js";
-import { User } from "../../models/db/user.js";
 import { Response } from "../../models/response.js";
 import { RequestService } from "../requestService.js";
 
@@ -18,8 +17,8 @@ export class RegistrationService extends RequestService {
 
     async action(request, response, next) {
         const model = request.body;
-        const isNewUser = await new UserController().registrate(model);
-        return isNewUser ? new Response({ nickname: model.nickname, email: model.email }) 
-                        : new Response({ message: `User with email ${model.email} already exists`, status: 401 });
+        const user = await new UserController().registrate(model);
+        return user[1] ? new Response(user) 
+                        : new Response({ message: `User with email ${model.email} already exists`, status: 400 });
     }
 }

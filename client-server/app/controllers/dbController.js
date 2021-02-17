@@ -2,32 +2,26 @@ export class DbController {
     constructor() {}
 
     async create(instance, model) {
-        let result = await instance.findOrCreate(
-            {
-                where: 
-                {
-                    nickname: model.nickname, 
-                    email: model.email, 
-                    password: model.password
-                }
-            });
+        return await instance.create(model);
+    }
 
-        return result[0]._options.isNewRecord;
+    async findOrCreate(instance, model) {
+        return await instance.findOrCreate(model);
     }
 
     async read(instance, model) {
-        const users = await instance.findAll({
-            where: {
-                email: model.email
-            }
-        });
-
-        return users[0];
+        return await instance.findAll(model)[0];
     }
 
-    async update() {}
+    async update(instance, model) {
+        return await instance.update(model);
+    }
 
-    async delete() {}
+    async delete(instance, model) {
+        return await instance.destroy(model);
+    }
 
-    async getList(instance, model) {}
+    async getList(instance, model) {
+        return await instance.findAll(model);
+    }
 }

@@ -18,7 +18,7 @@ export class LoginService extends RequestService {
     async action(request, response, next) {
         const model = request.body;
         const user = await new UserController().logIn(model);
-        return user ? new Response({ nickname: user.nickname, email: user.email })
+        return user.length ? new Response(user[0])
                             : new Response({ message: `User with email ${model.email} doesn't exist`, status: 401 });
     }
 }
