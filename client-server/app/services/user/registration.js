@@ -17,10 +17,9 @@ export class RegistrationService extends RequestService {
     }
 
     async action(request, response, next) {
-        let userController = new UserController();
-        let result = await userController.registrate(request.body);
-        let resp = new Response(result);
-        //console.log("response after: ", resp.body);
-        return resp;
+        const model = request.body;
+        const isNewUser = await new UserController().registrate(model);
+        return isNewUser ? new Response({ nickname: model.nickname, email: model.email }) 
+                        : new Response({ message: `User with email ${model.email} already exists`, status: 401 });
     }
 }

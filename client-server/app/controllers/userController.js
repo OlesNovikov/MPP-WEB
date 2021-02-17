@@ -7,8 +7,10 @@ export class UserController extends DbController{
     }
 
     async registrate(model) {
-        //console.log(model);
-        let result = await this.create(User, model);
-        return result;
+        return await this.create(User, model);
+    }
+
+    async logIn(model) {
+        return await this.read(User, model);
     }
 }

@@ -6,6 +6,5 @@ export class Response {
 }
 
 export const send = (response, responseObject) => {
-    //console.log("This is responseObject", responseObject.content);
     response.status(responseObject.status).json(responseObject.content);
 };

@@ -1,4 +1,5 @@
 import { Validator } from "../../configurations/validator.js";
+import { UserController } from "../../controllers/userController.js";
 import { Response } from "../../models/response.js";
 import { RequestService } from "../requestService.js";
 
@@ -14,7 +15,10 @@ export class LoginService extends RequestService {
         ];
     }
 
-    action(request, response, next, sequelize) {
-        return new Response({ email: request.body.email });
+    async action(request, response, next) {
+        const model = request.body;
+        const user = await new UserController().logIn(model);
+        return user ? new Response({ nickname: user.nickname, email: user.email })
+                            : new Response({ message: `User with email ${model.email} doesn't exist`, status: 401 });
     }
 }
