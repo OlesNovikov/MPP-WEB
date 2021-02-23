@@ -2,10 +2,6 @@ import { DbController } from "./dbController.js";
 import { User } from '../models/db/user.js'
 
 export class UserController extends DbController {
-    constructor() {
-        super();
-    }
-
     async registrate(model) {
         return await this.findOrCreate(User, {
             where: 

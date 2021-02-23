@@ -17,11 +17,12 @@ export class RequestService {
             await DbConnector.connect();
             let validateErrors = this.validate(request).filter(error => error);
             if (validateErrors.length !== 0) {
-                console.log(`validate() error: ${validateErrors}`);
+                console.log(`validate() error: ${ validateErrors }`);
                 send(response, new Response({ message: validateErrors, status: 400 }));
             }
-
-            send(response, await this.action(request, response, next));           
+            else {
+                send(response, await this.action(request, response, next)); 
+            }          
         }
         catch(error) {
             console.log(`process() error: ${error}`);

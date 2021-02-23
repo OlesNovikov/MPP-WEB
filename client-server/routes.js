@@ -11,4 +11,8 @@ router.get("/", (request, response, next) => {
 
 router.post("/registration", (request, response, next) => userServices.registration.process(request, response, next));
 router.post("/login", (request, response, next) => userServices.login.process(request, response, next));
-router.post("/createTask", (request, response, next) => taskServices.create.process(request, response, next));
+
+router.post("/task", (request, response, next) => taskServices.create.process(request, response, next));
+router.get("/task/:id", (request, response, next) => taskServices.read.process(request.params.id, response, next));
+router.delete("/task/:id", (request, response, next) => taskServices.delete.process(request.params.id, response, next));
+router.put("/task/:id", (request, response, next) => taskServices.update.process(request, response, next));

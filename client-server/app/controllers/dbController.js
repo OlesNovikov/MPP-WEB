@@ -1,6 +1,4 @@
 export class DbController {
-    constructor() {}
-
     async create(instance, model) {
         return await instance.create(model);
     }
@@ -9,16 +7,17 @@ export class DbController {
         return await instance.findOrCreate(model);
     }
 
-    async read(instance, model) {
-        return await instance.findAll(model)[0];
+    async read(instance, id) {
+        return await instance.findOne(id) || null;
     }
 
-    async update(instance, model) {
-        return await instance.update(model);
+    async update(instance, model, instanceId) {
+        return await instance.update(model, instanceId);
     }
 
-    async delete(instance, model) {
-        return await instance.destroy(model);
+    async delete(instance, id) {
+        const entity = await instance.findOne(id);
+        return entity === null ? null : await entity.destroy();
     }
 
     async getList(instance, model) {

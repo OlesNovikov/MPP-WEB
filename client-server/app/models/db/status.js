@@ -14,11 +14,13 @@ Status.init({
   },
   created_at: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: false,
+    field: 'created_at',
   },
   updated_at: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: false,
+    field: 'updated_at',
   }
 }, {
     sequelize: DbConnector.getSequelize(),
