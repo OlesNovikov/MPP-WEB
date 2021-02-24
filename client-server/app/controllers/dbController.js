@@ -7,8 +7,8 @@ export class DbController {
         return await instance.findOrCreate(model);
     }
 
-    async read(instance, id) {
-        return await instance.findOne(id) || null;
+    async read(instance, model) {
+        return await instance.findOne(model);
     }
 
     async update(instance, model, instanceId) {

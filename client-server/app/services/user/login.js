@@ -1,3 +1,4 @@
+import getJWTToken from "../../configurations/tokens.js";
 import { Validator } from "../../configurations/validator.js";
 import { UserController } from "../../controllers/userController.js";
 import { Response } from "../../models/response.js";
@@ -17,8 +18,9 @@ export class LoginService extends RequestService {
 
     async action(request, response, next) {
         const model = request.body;
-        const user = await new UserController().logIn(model);
-        return user.length ? new Response(user[0])
+        const users = await new UserController().logIn(model);
+        const user = users[0];
+        return users.length ? new Response({ user, token: getJWTToken(user) })
                             : new Response({ message: `User with email ${model.email} doesn't exist`, status: 401 });
     }
 }

@@ -20,4 +20,8 @@ export class UserController extends DbController {
             }
         });
     }
+
+    async getUsers() {
+        return await this.getList(User, {});
+    }
 }

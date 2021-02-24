@@ -36,4 +36,4 @@ User.init({
     sequelize: DbConnector.getSequelize(),
     modelName: 'User',
     tableName: 'users'
-})
+});

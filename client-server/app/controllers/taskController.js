@@ -1,4 +1,5 @@
-import { Task } from "../models/db/task.js";
+import pkg from '../models/index.js';
+const { User, Task } = pkg;
 import { DbController } from "./dbController.js";
 
 export class TaskController extends DbController {
@@ -8,7 +9,8 @@ export class TaskController extends DbController {
 
     async readTask(taskId) {
         return await this.read(Task, {
-            where: { id: taskId }
+            where: { id: taskId }, 
+            include: [{ model: User, as: "executor" }, { model: User, as: "author"}]
         });
     }
 
@@ -34,6 +36,6 @@ export class TaskController extends DbController {
     }
 
     async getTaskList(model) {
-        return await this.getList(Task, model);
+        return await this.getList(Task);
     }
 }

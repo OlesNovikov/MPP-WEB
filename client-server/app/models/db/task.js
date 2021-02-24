@@ -44,4 +44,4 @@ Task.init({
     sequelize: DbConnector.getSequelize(),
     modelName: 'Task',
     tableName: 'tasks'
-})
+});
