@@ -9,8 +9,8 @@ router.get("/", (request, response, next) => {
     response.end("<h1>Main page</h1>");
 });
 
-router.post("/registration", (request, response, next) => userServices.registration.process(request, response, next));
-router.post("/login", (request, response, next) => userServices.login.process(request, response, next));
+router.post("/registration", (request, response, next) => userServices.registration.process(request, response, next, false));
+router.post("/login", (request, response, next) => userServices.login.process(request, response, next, false));
 router.get("/users", (request, response, next) => userServices.getList.process(request, response, next))
 
 router.post("/tasks/add", (request, response, next) => taskServices.create.process(request, response, next));

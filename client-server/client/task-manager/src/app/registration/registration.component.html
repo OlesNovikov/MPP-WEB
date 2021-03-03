@@ -1,0 +1,18 @@
+<p>This is registration page</p> 
+<form>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="username" [(ngModel)]="user.username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+      
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="email" [(ngModel)]="user.email" placeholder="Email" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <span class="input-group-text" id="basic-addon2">example@gmail.com</span>
+    </div>
+
+    <div class="mb-3">
+        <input type="password" class="form-control" name="password" [(ngModel)]="user.password" placeholder="Password" id="exampleInputPassword1">
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="registrateUser(user)">Submit</button>
+    {{ receivedUser | json }}
+</form>

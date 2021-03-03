@@ -14,20 +14,24 @@ export class RequestService {
         return new Response({ message: "ok" });
     }
 
-    async process(request, response, next) {
+    async process(request, response, next, isTokenRequired = true) {
         try {
+            //console.log(request);
             await DbConnector.connect();
             let validateErrors = this.validate(request).filter(error => error);
             if (validateErrors.length !== 0) {
                 console.log(`validate() error: ${ validateErrors }`);
                 send(response, new Response({ message: validateErrors, status: 400 }));
+                return;
             }
-            /*else if (!(await this.isUserExist(request))) {
-                send(response, new Response({status: 401}));
+            
+            /*const currentUser = await this.authorisedUser(request, isTokenRequired);
+            if (!currentUser) {
+                send(response, new Response({ status: 401 }));
+                return;
             }*/
-            else {
-                send(response, await this.action(request, response, next)); 
-            }          
+             
+            send(response, await this.action(request, response, next, null));
         }
         catch(error) {
             console.log(`process() error: ${error}`);
@@ -35,9 +39,12 @@ export class RequestService {
         }
     }
 
-    async isUserExist(request) {
+    async authorisedUser(request, isTokenRequired) {
+        if (!isTokenRequired) {
+            return true;
+        }
+
         const token = getMe(request);
-        const user = await new UserController().readUser(token);
-        return user !== null;
+        return token ? await new UserController().readUser(token) : null;
     }
 }

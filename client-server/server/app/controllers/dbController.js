@@ -8,7 +8,6 @@ export class DbController {
     }
 
     async read(instance, model) {
-        console.log(model);
         return await instance.findOne(model);
     }
 

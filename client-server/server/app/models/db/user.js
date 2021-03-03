@@ -5,7 +5,7 @@ import { DbConnector } from '../../configurations/dbConnector.js';
 export class User extends Model {}
 
 User.init({
-  nickname: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
