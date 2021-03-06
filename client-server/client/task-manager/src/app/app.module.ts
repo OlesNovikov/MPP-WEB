@@ -12,10 +12,11 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule }   from '@angular/common/http';
 import { HttpRequestService } from './services/httpRequest.service';
 import { FormsModule } from '@angular/forms';
+import { AlertClosableComponent } from './alert-closable/alert-closable.component';
 
 @NgModule({
   declarations: [
-    AppComponent, RegistrationComponent, TasksComponent, UsersComponent, PageNotFoundComponent, LoginComponent
+    AppComponent, RegistrationComponent, TasksComponent, UsersComponent, PageNotFoundComponent, LoginComponent, AlertClosableComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    height: 100vh;
+    background-color: #C5E1A5!important;
+    overflow: hidden;
+    width: 100%;
+}

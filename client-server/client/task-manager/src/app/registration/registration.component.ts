@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/models/user';
 import { HttpRequestService } from '../services/httpRequest.service';
@@ -18,7 +17,10 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  async registrateUser(user: User) {
-    this.receivedUser = await this.service.post(`http://httpbin.org/post`, user);
+  registrateUser(user: User) {
+    this.service.post(`registration`, user).subscribe(data => {
+      console.log(data.user);
+      localStorage.setItem('userToken', data.token);
+    });
   }
 }

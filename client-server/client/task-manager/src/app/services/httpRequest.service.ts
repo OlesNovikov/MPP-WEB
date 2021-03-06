@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'src/models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class HttpRequestService {
@@ -9,16 +9,11 @@ export class HttpRequestService {
 constructor(private httpClient: HttpClient) { }
 
 public get(url: string): Observable<any> {
-    return this.httpClient.get(url);
+    return this.httpClient.get(environment.URL + url);
 }
 
-public async post(url: string, body: any) {
-    let result: Object = {};
-    await this.httpClient.post(url, body).toPromise().then((data:any) => {
-        result = data.data;
-        console.log(data.data);
-    });
-    return result;
+public post(url: string, body: Object): Observable<any> {
+    return this.httpClient.post(environment.URL + url, body);
 }
 
 public put() {

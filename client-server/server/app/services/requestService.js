@@ -16,7 +16,6 @@ export class RequestService {
 
     async process(request, response, next, isTokenRequired = true) {
         try {
-            //console.log(request);
             await DbConnector.connect();
             let validateErrors = this.validate(request).filter(error => error);
             if (validateErrors.length !== 0) {
@@ -25,13 +24,13 @@ export class RequestService {
                 return;
             }
             
-            /*const currentUser = await this.authorisedUser(request, isTokenRequired);
+            const currentUser = await this.authorisedUser(request, isTokenRequired);
             if (!currentUser) {
                 send(response, new Response({ status: 401 }));
                 return;
-            }*/
+            }
              
-            send(response, await this.action(request, response, next, null));
+            send(response, await this.action(request, response, next, currentUser));
         }
         catch(error) {
             console.log(`process() error: ${error}`);
