@@ -1,5 +1,5 @@
 import { DbConnector } from '../configurations/dbConnector.js';
-import { getMe } from '../configurations/tokens.js';
+import { getDecodedToken, getMe } from '../configurations/tokens.js';
 import { UserController } from '../controllers/userController.js';
 import { Response, send } from '../models/response.js';
 
@@ -33,7 +33,7 @@ export class RequestService {
             send(response, await this.action(request, response, next, currentUser));
         }
         catch(error) {
-            console.log(`process() error: ${error}`);
+            console.log(`process() error: ${ error }`);
             send(response, new Response({ message: error, status: 500 }));
         }
     }
@@ -43,7 +43,8 @@ export class RequestService {
             return true;
         }
 
-        const token = getMe(request);
-        return token ? await new UserController().readUser(token) : null;
+        const token = request.headers.authorisation;
+        const data = getMe(token);
+        return token ? await new UserController().readUser(data[0] || data) : null;
     }
 }

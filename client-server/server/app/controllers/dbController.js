@@ -21,6 +21,6 @@ export class DbController {
     }
 
     async getList(instance, model) {
-        return await instance.findAll(model);
+        return await instance.findAll();
     }
 }

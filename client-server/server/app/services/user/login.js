@@ -18,8 +18,9 @@ export class LoginService extends RequestService {
     }
 
     async action(request, response, next) {
-        const token = getMe(request);
-        const user = await new UserController().logIn(token);
+        const model = request.body;
+        const user = await new UserController().logIn(model);
+        //console.log(user);
         return user ? new Response({ user, token: getJWTToken(user) })
                     : new Response({ message: `User doesn't exist`, status: 401 });
     }

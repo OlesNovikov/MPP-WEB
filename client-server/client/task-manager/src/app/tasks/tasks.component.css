@@ -1,0 +1,33 @@
+.wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-page-title {
+    margin: 8px;
+}
+
+.create-task-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: rgb(220,220,220);
+    font-weight: bold;
+    color: rgb(120,120,120);
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: ease .3s;
+    margin: 8px 0;
+}
+
+.create-task-button:hover {
+    background: #8BC34A;
+    color: #ffffff;
+}
+
+.tasks-block {
+    justify-content: center;
+    width: 100%;
+}
