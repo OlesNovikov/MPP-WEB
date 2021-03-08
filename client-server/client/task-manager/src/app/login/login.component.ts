@@ -10,6 +10,7 @@ import { HttpRequestService } from '../services/httpRequest.service';
 })
 export class LoginComponent implements OnInit {
   user: User = new User();
+  errorAlert = { isActive: false, message: '' };
 
   constructor(
     private httpService: HttpRequestService,
@@ -19,13 +20,23 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public closeAlert() {
+    this.errorAlert = { isActive: false, message: ''};
+  }
+
   LogInUser(user: User) {
     this.httpService.post(`login`, user).subscribe(data => {
       console.log(data);
-      if (data.status != 500) {
-        localStorage.setItem('userToken', data.token);
-        this.router.navigateByUrl('tasks');
-      }
+      localStorage.setItem('userToken', data.token);
+      this.router.navigateByUrl('tasks');
+    },
+    (error) => {
+      console.log(error.error.message);
+      let message = ' ';
+      error.error.message.forEach((element: string) => {
+        message += element + '; ';
+      });
+      this.errorAlert = { isActive: true, message: message };
     });
   }
 

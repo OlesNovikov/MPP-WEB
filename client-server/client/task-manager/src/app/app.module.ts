@@ -14,6 +14,8 @@ import { HttpRequestService } from './services/httpRequest.service';
 import { FormsModule } from '@angular/forms';
 import { AlertClosableComponent } from './alert-closable/alert-closable.component';
 import { HeadersInterceptor } from './services/requestHeaders.service';
+import { TaskInfoComponent } from './task-info/task-info.component';
+import { TaskCreateComponent } from './task-create/task-create.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { HeadersInterceptor } from './services/requestHeaders.service';
     UsersComponent, 
     PageNotFoundComponent, 
     LoginComponent, 
-    AlertClosableComponent
+    AlertClosableComponent, 
+    TaskInfoComponent, 
+    TaskCreateComponent
   ],
   imports: [
     BrowserModule,

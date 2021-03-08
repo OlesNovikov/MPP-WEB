@@ -12,7 +12,7 @@ import { HttpRequestService } from '../services/httpRequest.service';
 
 export class RegistrationComponent implements OnInit {
   user: User = new User();
-  receivedUser: any;
+  errorAlert = { isActive: false, message: '' };
 
   constructor (
     private httpService: HttpRequestService,
@@ -22,11 +22,23 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  public closeAlert() {
+    this.errorAlert = { isActive: false, message: ''};
+  }
+
   registrateUser(user: User) {
     this.httpService.post(`registration`, user).subscribe(data => {
-      console.log(data.user);
+      this.user = data.user;
       localStorage.setItem('userToken', data.token);
       this.router.navigateByUrl('tasks');
+    },
+    (error) => {
+      console.log(error.error.message);
+      let message = ' ';
+      error.error.message.forEach((element: string) => {
+        message += element + '; ';
+      });
+      this.errorAlert = { isActive: true, message: message };
     });
   }
 }

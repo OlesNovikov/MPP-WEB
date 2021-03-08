@@ -9,33 +9,35 @@ Task.belongsTo(User, {
     as: 'author'
 });
 
+User.hasMany(Task, {
+    foreignKey: 'author_id',
+});
+
 Task.belongsTo(User, {
     foreignKey: 'executor_id',
     as: 'executor'
 });
 
 User.hasMany(Task, {
-    foreignKey: 'author_id',
-});
-
-User.hasMany(Task, {
     foreignKey: 'executor_id',
 });
 
-Task.hasOne(Priority, {
-    foreignKey: 'priority_id',
-    as: 'priority'
-});
-
-Priority.belongsTo(Task);
-
-Status.belongsTo(Task, {
+Task.belongsTo(Status, {
     foreignKey: 'status_id',
     as: 'status'
 });
 
-Task.hasOne(Status, {
+Status.hasOne(Task, {
     foreignKey: 'status_id',
+});
+
+Task.belongsTo(Priority, {
+    foreignKey: 'priority_id',
+    as: 'priority'
+});
+
+Priority.hasOne(Task, {
+    foreignKey: 'priority_id',
 });
 
 Task.belongsToMany(Tag, {
@@ -46,4 +48,4 @@ Tag.belongsToMany(Task, {
     through: 'tasks_tags'
 });
 
-export default { Task, User };
+export default { Task, User, Status, Priority };

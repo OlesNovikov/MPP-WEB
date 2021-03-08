@@ -1,73 +1,16 @@
-<div *ngIf="alert" class="alert alert-success alert-dismissable fade show" role="alert">
-  <strong>Success!</strong>Your data has been saved successfully.
-  <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+<div class="wrapper col-10">
+  <h1 class="task-page-title">Tasks List</h1>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Task</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Title:</label>
-                <input type="text" class="form-control" id="recipient-name">
-            </div>
-            <select class="form-select" id="autoSizingSelect">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-            <input type="file" class="file" data-show-upload="false" data-show-caption="true" multiple>
-            <div class="form-group">
-                <label for="message-text" class="col-form-label">Description:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Author:</label>
-                <input type="text" class="form-control" id="recipient-name">
-            </div>
-            <form>
-                <div class="form-group">
-                  <label for="inputDate">Deadline:</label>
-                  <input type="date" class="form-control">
-                </div>
-              </form>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Executor:</label>
-                <input type="text" class="form-control" id="recipient-name">
-            </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success">Save</button>
-        </div>
-    </div>
-  </div>
-</div>
-
-<div class="wrapper">
-  <h1 class="task-page-title">Tasks list</h1>
-
-  <button type="button" class="btn create-task-button btn-lg" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create task</button>
+  <button type="button" routerLink="/tasks/create" class="btn create-task-button btn-lg" data-target="#exampleModal">Create task</button>
 
   <div class="tasks-block row">
-    <table class="table table-hover col-8 col-md-8">
+    <table class="table table-hover col-9">
       <thead>
         <tr>
           <th scope="col">Title</th>
           <th scope="col">Author</th>
           <th scope="col">Executor</th>
-          <th scope="col">Deadline</th>
+          <th scope="col">Deadline (UTC)</th>
           <th scope="col">Status</th>
           <th scope="col"></th>
           <th scope="col"></th>
@@ -75,13 +18,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks">
-          <td >{{task.title}}</td>
-          <td >{{task.author_id}}</td>
-          <td >{{task.executor_id}}</td>
-          <td >{{task.deadline | date:'dd MMM, y, h:mm a' : 'GMT+03'}}</td>
-          <td >{{task.status_id}}</td>
-          <td ><button type="button" class="btn btn-outline-info">More</button></td>
-          <td ><button type="button" class="btn btn-outline-danger">Delete</button></td>
+          <td >{{ task.title }}</td>
+          <td >{{ task.author.username }}</td>
+          <td >{{ task.executor.username }}</td>
+          <td >{{ task.deadline | date:'dd MMM, y, h:mm a' }}</td>
+          <td >{{ task.status.name }}</td>
+          <td ><button type="button" routerLink="/tasks/{{task.id}}" class="btn btn-outline-info">More</button></td>
+          <td ><button type="button" (click)="deleteTask(task.id)" class="btn btn-outline-danger">Delete</button></td>
         </tr>
       </tbody>
     </table>

@@ -12,7 +12,7 @@ export class HeadersInterceptor implements HttpInterceptor {
         
         const token = localStorage.getItem('userToken');
         const request = req.clone({
-            headers: req.headers.set('authorisation', token || '')
+            headers: req.headers.set('authorization', token || '')
         });
 
         return next.handle(request);

@@ -7,8 +7,8 @@ router.post("/registration", (request, response, next) => userServices.registrat
 router.post("/login", (request, response, next) => userServices.login.process(request, response, next, false));
 router.get("/users", (request, response, next) => userServices.getList.process(request, response, next))
 
-router.post("/tasks/add", (request, response, next) => taskServices.create.process(request, response, next));
-router.get("/tasks/:id", (request, response, next) => taskServices.read.process(request, response, next));
 router.get("/tasks", (request, response, next) => taskServices.getList.process(request, response, next));
+router.post("/tasks/create", (request, response, next) => taskServices.create.process(request, response, next));
+router.get("/tasks/:id", (request, response, next) => taskServices.read.process(request, response, next));
 router.delete("/tasks/:id", (request, response, next) => taskServices.delete.process(request, response, next));
 router.put("/tasks/:id", (request, response, next) => taskServices.update.process(request, response, next));

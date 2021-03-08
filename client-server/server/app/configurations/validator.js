@@ -36,6 +36,6 @@ export class Validator {
     }
 
     validateRegexp(key, value, regexp) {
-        return !regexp.test(value) ? `${key} with value ${value} doesn't match regexp` : null;
+        return !regexp.test(value) ? `${key} should be as following: email@gmail.com` : null;
     }
 }

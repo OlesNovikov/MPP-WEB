@@ -1,0 +1,41 @@
+<div *ngIf="task !== undefined" class="task-info-block col-8">
+    <h1 class="task-info-title">Task Info</h1>
+    <div class="task-info">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Title:</label>
+            <input name="task-title" class="form-control" value={{task.title}} id="exampleFormControlInput1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea2" class="form-label">Description:</label>
+            <textarea name="task-description" class="form-control" [(ngModel)]="task.description" value={{task.description}} id="exampleFormControlTextarea2" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput3" class="form-label">Executor:</label>
+            <input class="form-control" value={{task.executor.username}} id="exampleFormControlInput3">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput4" class="form-label">Author:</label>
+            <input class="form-control" value={{task.author.username}} id="exampleFormControlInput4">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput5" class="form-label">Status:</label>
+            <input class="form-control" value={{task.status.name}} id="exampleFormControlInput5">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput6" class="form-label">Deadline:</label>
+            <input name="task-deadline" class="form-control" [(ngModel)]="task.deadline" value={{task.deadline}} id="exampleFormControlInput6">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput7" class="form-label">Priority:</label>
+            <input name="task-deadline" class="form-control" [(ngModel)]="task.priority.name" value={{task.priority.name}} id="exampleFormControlInput7">
+        </div>
+        
+        <div class="task-control-buttons">
+            <button type="button" (click)=dontSaveChanges() class="btn btn-outline-danger">Cancel</button>
+            <button type="button" (click)=saveChanges() class="btn btn-outline-success">Save</button>
+        </div>
+    </div>
+</div>

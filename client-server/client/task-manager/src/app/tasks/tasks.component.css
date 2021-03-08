@@ -2,10 +2,14 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    background: #ffffff;
+    margin: 20px auto;
 }
 
 .task-page-title {
     margin: 8px;
+    font-weight: bold;
+    color: rgb(120,120,120);
 }
 
 .create-task-button {

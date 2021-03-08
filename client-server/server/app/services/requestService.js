@@ -26,7 +26,7 @@ export class RequestService {
             
             const currentUser = await this.authorisedUser(request, isTokenRequired);
             if (!currentUser) {
-                send(response, new Response({ status: 401 }));
+                send(response, new Response({ message: "Anouthorised access", status: 401 }));
                 return;
             }
              
@@ -43,7 +43,7 @@ export class RequestService {
             return true;
         }
 
-        const token = request.headers.authorisation;
+        const token = request.headers.authorization;
         const data = getMe(token);
         return token ? await new UserController().readUser(data[0] || data) : null;
     }

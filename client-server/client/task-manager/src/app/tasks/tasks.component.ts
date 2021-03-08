@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/models/task';
 import { HttpRequestService } from '../services/httpRequest.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { HttpRequestService } from '../services/httpRequest.service';
 })
 export class TasksComponent implements OnInit {
   alert = false;
-  tasks: Task[] = [];
+  tasks: any[] = [];
 
   constructor(private service: HttpRequestService) { }
 
@@ -19,14 +18,19 @@ export class TasksComponent implements OnInit {
 
   public getTasks() {
     this.service.get('tasks').subscribe(data => {
-      console.log(data);
+      //console.log(data);
+      //console.log(data[0].author);
+      //console.log(data[0].executor);
       this.tasks = data;
       this.alert = true;
     });
   }
 
-  public closeAlert() {
-    this.alert = false;
+  public deleteTask(id: string) {
+    if (confirm("Are you sure you want to delete task?")) {
+      this.service.delete('tasks/' + id).subscribe(data => {
+        this.getTasks();
+      })
+    }
   }
-
 }

@@ -12,7 +12,7 @@ export class UserController extends DbController {
     async logIn(model) {
         return await this.read(User, {
             where: { email: model.email, password: model.password },
-            //default: model,
+            default: model,
         });
     }
 

@@ -8,7 +8,7 @@ export class DbController {
     }
 
     async read(instance, model) {
-        return await instance.findOne(model);
+        return await instance.findAll(model);
     }
 
     async update(instance, model, instanceId) {
@@ -21,6 +21,6 @@ export class DbController {
     }
 
     async getList(instance, model) {
-        return await instance.findAll();
+        return await instance.findAll(model);
     }
 }

@@ -1,5 +1,5 @@
 import associations from '../models/index.js';
-const { User, Task } = associations;
+const { User, Task, Status, Priority } = associations;
 import { DbController } from "./dbController.js";
 
 export class TaskController extends DbController {
@@ -10,7 +10,12 @@ export class TaskController extends DbController {
     async readTask(taskId) {
         return await this.read(Task, {
             where: { id: taskId }, 
-            include: [{ model: User, as: "executor" }, { model: User, as: "author"}]
+            include: [
+                { model: User, as: "executor" }, 
+                { model: User, as: "author" },
+                { model: Status, as: "status" },
+                { model: Priority, as: "priority" }
+            ]
         });
     }
 
@@ -34,6 +39,13 @@ export class TaskController extends DbController {
     }
 
     async getTasks() {
-        return await this.getList(Task, {});
+        return await this.getList(Task, {
+            include: [
+                    { model: User, as: "executor" },
+                    { model: User, as: "author" },
+                    { model: Status, as: "status" },
+                    { model: Priority, as: "priority" }
+                ]
+        });
     }
 }
