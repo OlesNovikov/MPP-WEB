@@ -1,4 +1,4 @@
-<div class="task-info-block col-8">
+<div *ngIf="users !== undefined" class="task-info-block col-8">
     <h1 class="new-task-info-page-title">New Task</h1>
     <div class="task-info">
         <div class="task-info-title-author">
@@ -8,7 +8,7 @@
 
             <div class="mb-3 col-4 task-author">
                 <label for="exampleFormControlInput4" class="form-label">Author:</label>
-                <input class="form-control-plaintext" readonly [(ngModel)]="task.author_id" id="exampleFormControlInput4">
+                <input class="form-control-plaintext" readonly [(ngModel)]="users[0].username" id="exampleFormControlInput4">
             </div>
         </div>
 
@@ -16,25 +16,22 @@
             <textarea name="task-description" placeholder="Description" [(ngModel)]="task.description" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
         </div>
 
-        <div class="mb-3">
-            <label for="exampleFormControlInput3" class="form-label">Executor:</label>
-            <input class="form-control" placeholder="Executor" [(ngModel)]="task.executor_id" id="exampleFormControlInput3">
-        </div>
+        <select class="form-select" [(ngModel)]="task.executor_id" aria-label="Default select example">
+            <option name="executor-selector" *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
+        </select>
+
+        <select class="form-select" [(ngModel)]="task.status_id" aria-label="Default select example">
+            <option name="executor-selector" *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
+        </select>
 
         <div class="mb-3">
-            <label for="exampleFormControlInput5" class="form-label">Status:</label>
-            <input class="form-control" [(ngModel)]="task.status_id" id="exampleFormControlInput5">
+            <label class="form-label">Deadline:</label>
+            <input type="datetime-local" name="task-deadline" [(ngModel)]="task.deadline" class="form-control">
         </div>
 
-        <div class="mb-3">
-            <label for="exampleFormControlInput6" class="form-label">Deadline:</label>
-            <input name="task-deadline" [(ngModel)]="task.deadline" class="form-control" id="exampleFormControlInput6">
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleFormControlInput7" class="form-label">Priority:</label>
-            <input name="task-deadline" class="form-control" [(ngModel)]="task.priority_id" id="exampleFormControlInput7">
-        </div>
+        <select class="form-select" [(ngModel)]="task.priority_id" aria-label="Default select example">
+            <option name="executor-selector" *ngFor="let priority of priorities" [value]="priority.id">{{priority.name}}</option>
+        </select>
         
         <div class="task-control-buttons">
             <button type="button" (click)=dontSaveChanges() class="btn btn-outline-danger">Cancel</button>

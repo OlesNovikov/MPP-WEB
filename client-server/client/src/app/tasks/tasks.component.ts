@@ -18,9 +18,6 @@ export class TasksComponent implements OnInit {
 
   public getTasks() {
     this.service.get('tasks').subscribe(data => {
-      //console.log(data);
-      //console.log(data[0].author);
-      //console.log(data[0].executor);
       this.tasks = data;
       this.alert = true;
     });

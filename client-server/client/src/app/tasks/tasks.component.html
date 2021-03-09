@@ -18,13 +18,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks">
-          <td >{{ task.title }}</td>
-          <td >{{ task.author.username }}</td>
-          <td >{{ task.executor.username }}</td>
-          <td >{{ task.deadline | date:'dd MMM, y, h:mm a' }}</td>
-          <td >{{ task.status.name }}</td>
-          <td ><button type="button" routerLink="/tasks/{{task.id}}" class="btn btn-outline-info">More</button></td>
-          <td ><button type="button" (click)="deleteTask(task.id)" class="btn btn-outline-danger">Delete</button></td>
+          <td>{{ task.title }}</td>
+          <td>{{ task.author.username }}</td>
+          <td>{{ task.executor.username }}</td>
+          <td>{{ task.deadline | date:'dd MMM, y, h:mm a' }}</td>
+          <td>{{ task.status.name }}</td>
+          <td><button type="button" routerLink="/tasks/{{task.id}}" class="btn btn-outline-info">More</button></td>
+          <td><button type="button" (click)="deleteTask(task.id)" class="btn btn-outline-danger">Delete</button></td>
         </tr>
       </tbody>
     </table>

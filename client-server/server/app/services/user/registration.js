@@ -18,9 +18,9 @@ export class RegistrationService extends RequestService {
 
     async action(request, response, next) {
         const model = request.body;
-        const user = await new UserController().registrate(model);
+        const users = await new UserController().registrate(model);
         //console.log(user);
-        return user[1] ? new Response({ user: user[0], token: getJWTToken(user) }) 
+        return users[1] ? new Response({ user: users[0], token: getJWTToken(users) }) 
                         : new Response({ message: [`User with email ${ model.email } already exists`], status: 400 });
     }
 }

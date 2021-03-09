@@ -8,6 +8,7 @@ import { HttpRequestService } from '../services/httpRequest.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   user: User = new User();
   errorAlert = { isActive: false, message: '' };
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
   LogInUser(user: User) {
     this.httpService.post(`login`, user).subscribe(data => {
       console.log(data);
+      //localStorage.setItem('userInfo', data.user);
       localStorage.setItem('userToken', data.token);
       this.router.navigateByUrl('tasks');
     },
