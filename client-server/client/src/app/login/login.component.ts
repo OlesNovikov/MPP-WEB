@@ -21,23 +21,27 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public closeAlert() {
+  closeAlert() {
     this.errorAlert = { isActive: false, message: ''};
   }
 
   LogInUser(user: User) {
-    this.httpService.post(`login`, user).subscribe(data => {
-      console.log(data);
-      //localStorage.setItem('userInfo', data.user);
+    this.httpService.post('login', user).subscribe(data => {
       localStorage.setItem('userToken', data.token);
       this.router.navigateByUrl('tasks');
     },
     (error) => {
-      console.log(error.error.message);
+      console.log(error);
       let message = ' ';
-      error.error.message.forEach((element: string) => {
-        message += element + '; ';
-      });
+      if (error.error.message) {
+        error.error.message.forEach((element: string) => {
+          message += element + '; ';
+        });
+      }
+      else {
+        message += 'Server connection aborted';
+      }
+
       this.errorAlert = { isActive: true, message: message };
     });
   }

@@ -4,6 +4,8 @@ import { RequestService } from "../requestService.js";
 
 export class CreateTaskService extends RequestService {
     async action(request, response, next) {
-        return new Response(await new TaskController().createTask(request.body));
+        const createdTask = await new TaskController().createTask(request.body);
+        console.log(createdTask);
+        return new Response(createdTask);
     }
 }

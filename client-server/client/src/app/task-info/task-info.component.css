@@ -4,9 +4,35 @@ label {
     color: rgb(120,120,120);
 }
 
+.task-info {
+    width: 100%;
+}
+
+.task-author label {
+    margin-right: 10px;
+}
+
+.task-selectable-info {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.form-label {
+    margin-right: 5px;
+}
+
 .task-info-title {
     font-weight: bold;
     color: rgb(120,120,120);
+}
+
+.task-info-title-author {
+    display: flex;
+}
+
+.task-author {
+    display: flex;
+    align-items: center;
 }
 
 .task-info-block {

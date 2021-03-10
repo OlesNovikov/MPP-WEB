@@ -25,6 +25,7 @@ export class TaskController extends DbController {
             title: model.title,
             description: model.description,
             deadline: model.deadline,
+            filename: model.filename,
             status_id: model.status_id,
             author_id: model.author_id,
             executor_id: model.executor_id,

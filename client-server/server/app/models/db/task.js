@@ -12,6 +12,9 @@ Task.init({
   description: {
     type: DataTypes.STRING,
   },
+  filename: {
+    type: DataTypes.STRING,
+  },
   deadline: {
     type: DataTypes.DATE,
   },

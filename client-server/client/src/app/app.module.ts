@@ -11,7 +11,7 @@ import { LoginComponent } from './login/login.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS }   from '@angular/common/http';
 import { HttpRequestService } from './services/httpRequest.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertClosableComponent } from './alert-closable/alert-closable.component';
 import { HeadersInterceptor } from './services/requestHeaders.service';
 import { TaskInfoComponent } from './task-info/task-info.component';
@@ -33,7 +33,8 @@ import { TaskCreateComponent } from './task-create/task-create.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     HttpRequestService, {

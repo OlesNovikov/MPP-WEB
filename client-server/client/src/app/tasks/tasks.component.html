@@ -1,3 +1,10 @@
+<div *ngIf="errorAlert.isActive" class="alert alert-danger alert-dismissable fade show" role="alert">
+  <strong>Error!</strong>{{errorAlert.message}}
+  <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
 <div class="wrapper col-10">
   <h1 class="task-page-title">Tasks List</h1>
 

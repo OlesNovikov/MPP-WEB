@@ -10,8 +10,17 @@ label {
     align-items: center;
     margin: 20px auto;
     background: #FFFFFF;
-    border-radius: 5%;
+    border-radius: 15px;
     padding: 2% 2%;
+}
+
+.task-selectable-info {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.required-field {
+    color: red;
 }
 
 .new-task-info-page-title {
@@ -39,4 +48,8 @@ label {
 
 .task-author label {
     margin-right: 10px;
+}
+
+.form-label {
+    margin-right: 5px;
 }

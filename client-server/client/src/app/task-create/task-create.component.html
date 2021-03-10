@@ -1,41 +1,72 @@
-<div *ngIf="users !== undefined" class="task-info-block col-8">
+<div *ngIf="errorAlert.isActive" class="alert alert-danger alert-dismissable fade show" role="alert">
+    <strong>Error!</strong>{{errorAlert.message}}
+    <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+  
+<div *ngIf="users !== undefined && task !== undefined && currUser !== undefined" class="task-info-block col-8">
     <h1 class="new-task-info-page-title">New Task</h1>
     <div class="task-info">
         <div class="task-info-title-author">
             <div class="mb-3 col-6">
-                <input name="task-title" placeholder="Title" [(ngModel)]="task.title" class="form-control" id="exampleFormControlInput1">
+                <input name="task-title" placeholder="Title (required field) " [(ngModel)]="task.title" class="form-control" id="exampleFormControlInput1">
             </div>
 
             <div class="mb-3 col-4 task-author">
                 <label for="exampleFormControlInput4" class="form-label">Author:</label>
-                <input class="form-control-plaintext" readonly [(ngModel)]="users[0].username" id="exampleFormControlInput4">
+                <input class="form-control-plaintext" readonly [(ngModel)]="currUser.username" id="exampleFormControlInput4">
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 col-12 task-description">
             <textarea name="task-description" placeholder="Description" [(ngModel)]="task.description" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
         </div>
 
-        <select class="form-select" [(ngModel)]="task.executor_id" aria-label="Default select example">
-            <option name="executor-selector" *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
-        </select>
-
-        <select class="form-select" [(ngModel)]="task.status_id" aria-label="Default select example">
-            <option name="executor-selector" *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
-        </select>
-
-        <div class="mb-3">
-            <label class="form-label">Deadline:</label>
-            <input type="datetime-local" name="task-deadline" [(ngModel)]="task.deadline" class="form-control">
+        <div class="md-3 task-selectable-info">
+            <div class="mb-3 task-executor">
+                <label class="form-label">Executor:</label>
+                <select class="form-select" [(ngModel)]="task.executor_id" aria-label="Default select example">
+                    <option name="executor-selector" *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
+                </select>
+            </div>
+    
+            <div class="mb-3 task-status">
+                <label class="form-label">Status:<span class="required-field">*</span></label>
+                <select class="form-select" [(ngModel)]="task.status_id" aria-label="Default select example">
+                    <option name="executor-selector" *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
+                </select>
+            </div>
+    
+            <div class="mb-3 task-priority">
+                <label class="form-label">Priority:<span class="required-field">*</span></label>
+                <select class="form-select" [(ngModel)]="task.priority_id" aria-label="Default select example">
+                    <option name="executor-selector" *ngFor="let priority of priorities" [value]="priority.id">{{priority.name}}</option>
+                </select>
+            </div>
         </div>
 
-        <select class="form-select" [(ngModel)]="task.priority_id" aria-label="Default select example">
-            <option name="executor-selector" *ngFor="let priority of priorities" [value]="priority.id">{{priority.name}}</option>
-        </select>
-        
-        <div class="task-control-buttons">
-            <button type="button" (click)=dontSaveChanges() class="btn btn-outline-danger">Cancel</button>
-            <button type="button" (click)=saveChanges() class="btn btn-outline-success">Save</button>
+        <div class="mb-3 col-12 task-deadline">
+            <label class="form-label">Deadline:</label>
+            <div class="mb-3">
+                <input type="datetime-local" name="task-deadline" [(ngModel)]="task.deadline" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-12">
+            <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+               <div class="task-file">
+                    <label class="form-label">File:</label> 
+                    <div class="mb-3">
+                        <input type="file" name="fileInput" (change)="onFileSelect($event)">
+                    </div>
+               </div>
+
+                <div class="task-control-buttons">
+                    <button type="button" (click)=dontSaveChanges() class="btn btn-outline-danger">Cancel</button>
+                    <button type="submit" (click)=saveChanges() class="btn btn-outline-success">Save</button>
+                </div>
+              </form>
         </div>
     </div>
 </div>

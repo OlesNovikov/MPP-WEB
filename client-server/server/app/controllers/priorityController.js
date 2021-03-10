@@ -3,7 +3,6 @@ import { DbController } from "./dbController.js";
 
 export class PriorityController extends DbController {
     async getPriorities() {
-        return await this.getList(Priority, {
-        });
+        return await this.getList(Priority, {});
     }
 }

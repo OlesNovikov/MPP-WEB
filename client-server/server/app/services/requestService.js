@@ -26,7 +26,7 @@ export class RequestService {
             
             const currentUser = await this.authorisedUser(request, isTokenRequired);
             if (!currentUser) {
-                send(response, new Response({ message: "Anouthorised access", status: 401 }));
+                send(response, new Response({ message: ['Unauthorized access'], status: 401 }));
                 return;
             }
              

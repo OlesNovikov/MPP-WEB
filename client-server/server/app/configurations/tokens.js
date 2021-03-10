@@ -6,12 +6,6 @@ const configurations = {
     tokenExpireTime: '30d',
 };
 
-// Bearer {token}
-const getToken = (request) => {
-    const authorizationSplit = (request.headers.authorization || '').split(' ');
-    return authorizationSplit.length > 1 && authorizationSplit[0] === 'Bearer' ? authorizationSplit[1] : null;
-};
-
 export const getDecodedToken = token => {
     return token ? verify(token, configurations.tokenAlghorithm, (error, decoded) => {
         return error ? error : decoded;
@@ -22,7 +16,6 @@ export default function getJWTToken(data) {
     return sign({ data }, configurations.tokenAlghorithm, { expiresIn: configurations.tokenExpireTime });
 }
 export function getMe(request) {
-    //const decodedToken = getDecodedToken(getToken(request));
     const decodedToken = getDecodedToken(request);
     if (decodedToken && decodedToken.data && new Date() < new Date((new Date(0)).setUTCSeconds(decodedToken.exp))) {
         return decodedToken.data;

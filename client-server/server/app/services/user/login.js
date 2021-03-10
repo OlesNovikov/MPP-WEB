@@ -21,7 +21,6 @@ export class LoginService extends RequestService {
         const model = request.body;
         const result = await new UserController().logIn(model);
         const user = result[0];
-        console.log(user);
         return user ? new Response({ user: user, token: getJWTToken(user) })
                     : new Response({ message: [`Email or password is not valid`], status: 401 });
     }
