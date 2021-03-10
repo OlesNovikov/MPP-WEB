@@ -1,0 +1,66 @@
+<div *ngIf="task !== undefined && users !== undefined" class="task-info-block col-8">
+    <h1 class="task-info-title">Task Info</h1>
+    <div class="task-info">
+        <div class="task-info-title-author">
+            <div class="mb-3 col-6">
+                <input name="task-title" placeholder="Title" [(ngModel)]="task.title" class="form-control" id="exampleFormControlInput1">
+            </div>
+    
+            <div class="mb-3 col-4 task-author">
+                <label for="exampleFormControlInput4" class="form-label">Author:</label>
+                <input class="form-control-plaintext" readonly [(ngModel)]="users[0].username" id="exampleFormControlInput4">
+            </div>
+        </div>
+    
+        <div class="mb-3 col-12 task-description">
+            <textarea name="task-description" placeholder="Description" [(ngModel)]="task.description" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+        </div>
+    
+        <div class="task-selectable-info">
+            <div class="task-executor">
+                <label class="form-label">Executor:</label>
+                <select class="form-select" [(ngModel)]="task.executor_id" aria-label="Default select example">
+                    <option name="executor-selector" *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
+                </select>
+            </div>
+        
+            <div class="task-status">
+                <label class="form-label">Status:</label>
+                <select class="form-select" [(ngModel)]="task.status_id" aria-label="Default select example">
+                    <option name="executor-selector" *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
+                </select>
+            </div>
+    
+            <div class="task-priority">
+                <label class="form-label">Priority:</label>
+                <select class="form-select" [(ngModel)]="task.priority_id" aria-label="Default select example">
+                    <option name="executor-selector" *ngFor="let priority of priorities" [value]="priority.id">{{priority.name}}</option>
+                </select>
+            </div>
+        </div>
+    
+        <div class="mb-3">
+            <label class="form-label">Deadline:</label>
+            <input readonly type="text" name="task-deadline" [(ngModel)]="deadline" class="form-control">
+            <input type="datetime-local" name="task-deadline" [(ngModel)]="task.deadline" class="form-control">
+        </div>
+    
+        <div class="col-12">
+            <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+               <div class="task-file">
+                    <label class="form-label">File: {{filename}}</label>
+                    <button type="button" (click)=downloadFile() class="btn btn-outline-info">Download</button>
+                    <div class="mb-3">
+                        <label class="form-label">New File: </label>
+                        <input type="file" name="fileInput" (change)="onFileSelect($event)">
+                    </div>
+               </div>
+
+               <div class="task-control-buttons">
+                    <button type="button" (click)=dontSaveChanges() class="btn btn-outline-danger">Cancel</button>
+                    <button type="submit" (click)=saveChanges() class="btn btn-outline-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

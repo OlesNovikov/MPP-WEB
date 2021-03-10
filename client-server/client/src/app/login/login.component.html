@@ -1,0 +1,38 @@
+<div *ngIf="errorAlert.isActive" class="alert alert-danger alert-dismissable fade show" role="alert">
+  <strong>Error!</strong>{{errorAlert.message}}
+  <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="login-block row">
+  <form class="login-form col-md-4 col-12">
+      <h2 class="login-form-title">Log In</h2>      
+      <div class="input-group mb-3">
+          <input type="text" 
+                  class="form-control" 
+                  name="email" 
+                  placeholder="Email" aria-label="Recipient's username" 
+                  aria-describedby="basic-addon2"
+                  [(ngModel)]="user.email" >
+      </div>
+      
+      <div class="input-group mb-3">
+        <input type="password" 
+                class="form-control" 
+                name="password" 
+                placeholder="Password"
+                aria-describedby="basic-addon2"
+                [(ngModel)]="user.password" >
+      </div>
+  
+      <div class="login-form-registration">
+        Don't have an account?
+        <a routerLink="/registration">Register Here</a>
+      </div>
+
+      <button type="submit" 
+      class="btn btn-primary login-button"
+      (click)="LogInUser(user)">Log in</button>
+  </form>
+</div>

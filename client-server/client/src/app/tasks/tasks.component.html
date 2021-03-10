@@ -1,0 +1,39 @@
+<div *ngIf="errorAlert.isActive" class="alert alert-danger alert-dismissable fade show" role="alert">
+  <strong>Error!</strong>{{errorAlert.message}}
+  <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="wrapper col-10">
+  <h1 class="task-page-title">Tasks List</h1>
+
+  <button type="button" routerLink="/tasks/create" class="btn create-task-button btn-lg" data-target="#exampleModal">Create task</button>
+
+  <div class="tasks-block row">
+    <table class="table table-hover col-9">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Executor</th>
+          <th scope="col">Deadline (UTC)</th>
+          <th scope="col">Status</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.author.username }}</td>
+          <td>{{ task.executor.username }}</td>
+          <td>{{ task.deadline | date:'dd MMM, y, h:mm a' }}</td>
+          <td>{{ task.status.name }}</td>
+          <td><button type="button" routerLink="/tasks/{{task.id}}" class="btn btn-outline-info">More</button></td>
+          <td><button type="button" (click)="deleteTask(task.id)" class="btn btn-outline-danger">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
