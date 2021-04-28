@@ -1,4 +1,5 @@
 import multer from "multer";
+import { events } from "../../configurations/events.js";
 import { Response } from "../../models/response.js";
 import { RequestService } from "../requestService.js";
 
@@ -15,6 +16,6 @@ export const storageConfig = multer.diskStorage({
 
 export class UploadFileService extends RequestService {
     async action(request, response, next) {
-        return new Response({ status: 200, message: "ok" });
+        return new Response({ event: events.uploadFile, data: 'file uploaded' });
     }
 }

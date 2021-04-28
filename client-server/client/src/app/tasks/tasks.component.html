@@ -5,10 +5,10 @@
   </button>
 </div>
 
-<div class="wrapper col-10">
+<div class="wrapper col-sm-11 col-10">
   <h1 class="task-page-title">Tasks List</h1>
 
-  <button type="button" routerLink="/tasks/create" class="btn create-task-button btn-lg" data-target="#exampleModal">Create task</button>
+  <button type="button" (click)="navigateToCreateTaskLink()" class="btn create-task-button btn-lg" data-target="#exampleModal">Create task</button>
 
   <div class="tasks-block row">
     <table class="table table-hover col-9">

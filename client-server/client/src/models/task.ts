@@ -1,8 +1,8 @@
 export class Task {
     title = '';
     description = '';
-    author_id = 128;
-    executor_id = 128;
+    author_id = -1;
+    executor_id = -1;
     status_id = 1;
     priority_id = 1;
     filename = '';

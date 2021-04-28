@@ -1,44 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { events } from 'src/environments/events';
 import { User } from 'src/models/user';
-import { HttpRequestService } from '../services/httpRequest.service';
+import { Request } from 'src/models/wsRequest';
+import { DataManagerService } from '../data-manager.service';
+import { WebsocketService } from '../websockets/websocket.service';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css'],
-  providers: [HttpRequestService]
+    selector: 'app-registration',
+    templateUrl: './registration.component.html',
+    styleUrls: ['./registration.component.css'],
 })
 
 export class RegistrationComponent implements OnInit {
-  user: User = new User();
-  errorAlert = { isActive: false, message: '' };
+    user: User = new User();
+    errorAlert = { isActive: false, message: '' };
 
-  constructor (
-    private httpService: HttpRequestService,
-    private router: Router 
+    constructor(
+        private websocketService: WebsocketService,
+        private dataManager: DataManagerService,
     ) { }
 
-  ngOnInit(): void {
-  }
-  
-  public closeAlert() {
-    this.errorAlert = { isActive: false, message: ''};
-  }
+    ngOnInit(): void {
+        this.dataManager.regError.subscribe(error => {
+            let message = ' ';
+            error.forEach((element: string) => {
+                message += element + '; ';
+            });
 
-  registrateUser(user: User) {
-    this.httpService.post(`registration`, user).subscribe(data => {
-      this.user = data.user;
-      localStorage.setItem('userToken', data.token);
-      this.router.navigateByUrl('tasks');
-    },
-    (error) => {
-      console.log(error.error.message);
-      let message = ' ';
-      error.error.message.forEach((element: string) => {
-        message += element + '; ';
-      });
-      this.errorAlert = { isActive: true, message: message };
-    });
-  }
+            this.errorAlert = { isActive: true, message: message };
+        });
+    }
+
+    public closeAlert() {
+        this.errorAlert = { isActive: false, message: '' };
+    }
+
+    registrateUser(user: User) {
+        this.websocketService.send(events.message, new Request(events.registration, null, null, user));
+    }
 }

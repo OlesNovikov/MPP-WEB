@@ -3,125 +3,134 @@ import { Router } from '@angular/router';
 import { Task } from 'src/models/task';
 import { HttpRequestService } from '../services/httpRequest.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { WebsocketService } from '../websockets/websocket.service';
+import { events } from 'src/environments/events';
+import { DataManagerService } from '../data-manager.service';
+import { Request } from 'src/models/wsRequest';
 
 @Component({
-  selector: 'app-task-create',
-  templateUrl: './task-create.component.html',
-  styleUrls: ['./task-create.component.css']
+    selector: 'app-task-create',
+    templateUrl: './task-create.component.html',
+    styleUrls: ['./task-create.component.css']
 })
 
 export class TaskCreateComponent implements OnInit {
-  task: Task = new Task();
-  currUser: any;
-  users: any;
-  statuses: any;
-  priorities: any;
-  uploadForm: FormGroup;
-  errorAlert = { isActive: false, message: '' };
+    task: Task = new Task();
+    currUser: any;
+    users: any;
+    statuses: any;              
+    priorities: any;
+    uploadForm: FormGroup;
+    errorAlert = { isActive: false, message: '' };
+    executor_id = '';
 
-  constructor (
-              private httpService: HttpRequestService,
-              private router: Router,
-              private formBuilder: FormBuilder,
-              ) { 
-    this.uploadForm = this.formBuilder.group({
-      fileInput: ['']
-    });
-  }
-
-  onFileSelect(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.uploadForm.get('fileInput')?.setValue(file);
-      this.task.filename = file.name;
-    }
-  }
-
-  onSubmit() {
-    const formData = new FormData();
-    formData.append('file', this.uploadForm.get('fileInput')?.value);
-
-    this.httpService.post('file/upload', formData).subscribe(data => {},
-    (error) => {
-      this.handleError(error);
-    });
-  }
-
-  ngOnInit(): void {
-    this.getUsers();
-    this.getStatuses();
-    this.getPriorities();
-    this.getCurrentUser();
-  }
-
-  getCurrentUser() {
-    this.httpService.get('user').subscribe(data => {
-      this.currUser = data[0];
-    },
-    (error) => {
-      this.handleError(error);
-    });
-  }
-
-  getUsers() {
-    this.httpService.get('users').subscribe(data => {
-      this.users = data;
-    },
-    (error) => {
-      this.handleError(error);
-    });
-  }
-
-  getStatuses() {
-    this.httpService.get('statuses').subscribe(data => {
-      this.statuses = data;
-    },
-    (error) => {
-      this.handleError(error);
-    });
-  }
-
-  getPriorities() {
-    this.httpService.get('priorities').subscribe(data => {
-      this.priorities = data;
-    },
-    (error) => {
-      this.handleError(error);
-    });
-  }
-
-  closeAlert() {
-    this.errorAlert = { isActive: false, message: ''};
-  }
-
-  dontSaveChanges() {
-    if (confirm("Changes will not be saved. Are you sure you want to leave this page?")) {
-        this.router.navigateByUrl('tasks');
-    }
-  }
-
-  saveChanges() {
-    this.httpService.post('tasks/create', this.task).subscribe(data => {
-      this.router.navigateByUrl('tasks');
-    },
-    (error) => {
-      this.handleError(error);
-    });
-  }
-
-  handleError(error: any) {
-    console.log(error);
-      let message = ' ';
-      if (error.error.message.length) {
-        error.error.message.forEach((element: string) => {
-          message += element + '; ';
+    constructor(
+        private httpService: HttpRequestService,
+        private router: Router,
+        private formBuilder: FormBuilder,
+        private websocketService: WebsocketService,
+        private dataManager: DataManagerService,
+    ) {
+        this.uploadForm = this.formBuilder.group({
+            fileInput: ['']
         });
-      } else if (error.error.message) {
-        message += error.message + '; ';
-      } else {
-        message += 'Server connection aborted';
-      }
 
-      this.errorAlert = { isActive: true, message: message };
-  }
+        this.dataManager.users.subscribe(data => {
+            this.users = data;
+        });
+
+        this.dataManager.author.subscribe(data => {
+            this.currUser = data;
+            this.task.author_id = this.currUser.id;
+        });
+
+        this.dataManager.priorities.subscribe(data => {
+            this.priorities = data;
+        });
+
+        this.dataManager.statuses.subscribe(data => {
+            this.statuses = data;
+        });
+
+        this.dataManager.createdTask.subscribe(data => {
+            if (data.status == 200) {
+                this.router.navigateByUrl('tasks');
+            }
+        });
+    }
+
+    onFileSelect(event: any) {
+        if (event.target.files.length > 0) {
+            const file = event.target.files[0];
+            this.uploadForm.get('fileInput')?.setValue(file);
+            this.task.filename = file.name;
+        }
+    }
+
+    onSubmit() {
+        const formData = new FormData();
+        formData.append('file', this.uploadForm.get('fileInput')?.value);
+
+        this.httpService.post('file/upload', formData).subscribe(data => { },
+            (error) => {
+                this.handleError(error);
+            });
+    }
+
+    ngOnInit(): void {
+        this.getUsers();
+        this.getStatuses();
+        this.getPriorities();
+        this.getCurrentUser();
+    }
+
+    getCurrentUser() {
+        const token = localStorage.getItem('userToken');
+        this.websocketService.send(events.getUser, new Request(events.getUser, null, token, null));
+    }
+
+    getUsers() {
+        const token = localStorage.getItem('userToken');
+        this.websocketService.send(events.getUsers, new Request(events.getUsers, null, token, null));
+    }
+
+    getStatuses() {
+        const token = localStorage.getItem('userToken');
+        this.websocketService.send(events.getStatuses, new Request(events.getStatuses, null, token, null));
+    }
+
+    getPriorities() {
+        const token = localStorage.getItem('userToken');
+        this.websocketService.send(events.getPriorities, new Request(events.getPriorities, null, token, null));
+    }
+
+    closeAlert() {
+        this.errorAlert = { isActive: false, message: '' };
+    }
+
+    dontSaveChanges() {
+        if (confirm("Changes will not be saved. Are you sure you want to leave this page?")) {
+            this.router.navigateByUrl('tasks');
+        }
+    }
+
+    saveChanges() {
+        const token = localStorage.getItem('userToken');
+        this.websocketService.send(events.createTask, new Request(events.createTask, null, token, this.task));
+    }
+
+    handleError(error: any) {
+        let message = ' ';
+        if (error.error.message.length) {
+            error.error.message.forEach((element: string) => {
+                message += element + '; ';
+            });
+        } else if (error.error.message) {
+            message += error.message + '; ';
+        } else {
+            message += 'Server connection aborted';
+        }
+
+        this.errorAlert = { isActive: true, message: message };
+    }
 }
