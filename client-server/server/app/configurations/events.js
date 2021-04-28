@@ -1,0 +1,15 @@
+export const events = {
+    message: 'message',
+    registration: 'registrate-user',
+    login: 'login-user',
+    getUsers: 'get-users',
+    getUser: 'get-user',
+    getTasks: 'get-tasks',
+    deleteTask: 'delete-task',
+    getTask: 'get-task',
+    updateTask: 'update-task',
+    createTask: 'create-task',
+    getStatuses: 'get-statuses',
+    getPriorities: 'get-priorities',
+    uploadFile: 'upload-file',
+}

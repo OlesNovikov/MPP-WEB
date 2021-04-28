@@ -34,14 +34,14 @@
             <div class="mb-3 task-status">
                 <label class="form-label">Status:<span class="required-field">*</span></label>
                 <select class="form-select" [(ngModel)]="task.status_id" aria-label="Default select example">
-                    <option name="executor-selector" *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
+                    <option name="status-selector" *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
                 </select>
             </div>
     
             <div class="mb-3 task-priority">
                 <label class="form-label">Priority:<span class="required-field">*</span></label>
                 <select class="form-select" [(ngModel)]="task.priority_id" aria-label="Default select example">
-                    <option name="executor-selector" *ngFor="let priority of priorities" [value]="priority.id">{{priority.name}}</option>
+                    <option name="priority-selector" *ngFor="let priority of priorities" [value]="priority.id">{{priority.name}}</option>
                 </select>
             </div>
         </div>

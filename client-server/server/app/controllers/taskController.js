@@ -19,19 +19,18 @@ export class TaskController extends DbController {
         });
     }
 
-    async updateTask(request) {
-        const model = request.body;
+    async updateTask(id, body) {
         return await this.update(Task, {
-            title: model.title,
-            description: model.description,
-            deadline: model.deadline,
-            filename: model.filename,
-            status_id: model.status_id,
-            author_id: model.author_id,
-            executor_id: model.executor_id,
-            priority_id: model.priority_id
+            title: body.title,
+            description: body.description,
+            deadline: body.deadline,
+            filename: body.filename,
+            status_id: body.status_id,
+            author_id: body.author_id,
+            executor_id: body.executor_id,
+            priority_id: body.priority_id
         }, {
-            where: { id: request.params.id }
+            where: { id: id }
         });
     }
 
