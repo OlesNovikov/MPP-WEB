@@ -20,9 +20,7 @@ export class LoginComponent implements OnInit {
         private websocketService: WebsocketService,
         private dataManager: DataManagerService,
         private router: Router,
-    ) { }
-
-    ngOnInit(): void {
+    ) {
         this.dataManager.user.subscribe(data => {
             this.router.navigateByUrl('tasks');
         });
@@ -35,6 +33,10 @@ export class LoginComponent implements OnInit {
 
             this.errorAlert = { isActive: true, message: message };
         });
+     }
+
+    ngOnInit(): void {
+        
     }
 
     closeAlert() {

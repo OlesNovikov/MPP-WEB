@@ -18,7 +18,7 @@ export class TaskCreateComponent implements OnInit {
     task: Task = new Task();
     currUser: any;
     users: any;
-    statuses: any;
+    statuses: any;              
     priorities: any;
     uploadForm: FormGroup;
     errorAlert = { isActive: false, message: '' };
@@ -36,28 +36,23 @@ export class TaskCreateComponent implements OnInit {
         });
 
         this.dataManager.users.subscribe(data => {
-            console.log('dataManager.users');
             this.users = data;
         });
 
-        this.dataManager.user.subscribe(data => {
-            console.log('dataManager.user');
+        this.dataManager.author.subscribe(data => {
             this.currUser = data;
             this.task.author_id = this.currUser.id;
         });
 
         this.dataManager.priorities.subscribe(data => {
             this.priorities = data;
-            console.log('dataManager.priorities');
         });
 
         this.dataManager.statuses.subscribe(data => {
-            console.log('dataManager.statuses');
             this.statuses = data;
         });
 
         this.dataManager.createdTask.subscribe(data => {
-            console.log('dataManager.createdTask');
             if (data.status == 200) {
                 this.router.navigateByUrl('tasks');
             }
@@ -91,25 +86,21 @@ export class TaskCreateComponent implements OnInit {
 
     getCurrentUser() {
         const token = localStorage.getItem('userToken');
-        console.log('getCurrentUser()');
         this.websocketService.send(events.getUser, new Request(events.getUser, null, token, null));
     }
 
     getUsers() {
         const token = localStorage.getItem('userToken');
-        console.log('getUsers()');
         this.websocketService.send(events.getUsers, new Request(events.getUsers, null, token, null));
     }
 
     getStatuses() {
         const token = localStorage.getItem('userToken');
-        console.log('getStatuses()');
         this.websocketService.send(events.getStatuses, new Request(events.getStatuses, null, token, null));
     }
 
     getPriorities() {
         const token = localStorage.getItem('userToken');
-        console.log('getPriorities()');
         this.websocketService.send(events.getPriorities, new Request(events.getPriorities, null, token, null));
     }
 
@@ -119,14 +110,12 @@ export class TaskCreateComponent implements OnInit {
 
     dontSaveChanges() {
         if (confirm("Changes will not be saved. Are you sure you want to leave this page?")) {
-            console.log('dontSaveChanges()');
             this.router.navigateByUrl('tasks');
         }
     }
 
     saveChanges() {
         const token = localStorage.getItem('userToken');
-        console.log('saveChanges()');
         this.websocketService.send(events.createTask, new Request(events.createTask, null, token, this.task));
     }
 

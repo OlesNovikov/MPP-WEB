@@ -24,8 +24,6 @@ export class AppComponent {
             const event = response.event;
             const data = response.data;
 
-            console.log('response from server: ', response);
-
             if (event == events.registration) {
                 if (data.user) {
                     localStorage.setItem('userToken', data.token);
@@ -37,8 +35,8 @@ export class AppComponent {
             }
             else if (event == events.login) {
                 if (data.user) {
-                    dataManager.user.next(data.user);
                     localStorage.setItem('userToken', data.token);
+                    dataManager.user.next(data.user);
                 }
                 else {
                     dataManager.logError.next(data);
@@ -66,10 +64,13 @@ export class AppComponent {
                 dataManager.createdTask.next(response);
             }
             else if (event == events.getUser) {
-                dataManager.user.next(response.data[0]);
+                dataManager.author.next(response.data[0]);
             }
             else if (event == events.getUsers) {
                 dataManager.users.next(response.data);
+            }
+            else {
+                console.log('Event is not recognized');
             }
         });
     }

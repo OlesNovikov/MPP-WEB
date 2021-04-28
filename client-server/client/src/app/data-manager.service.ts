@@ -10,14 +10,15 @@ import { WebsocketService } from './websockets/websocket.service';
 })
 
 export class DataManagerService {
+    public user = new Subject<any>();
     public tasks = new Subject<any>();
+    public author = new Subject<any>();
     public createdTask = new Subject<any>();
     public deletedTask = new Subject<any>();
     public taskInfo = new Subject<any>();
     public priorities = new Subject<any>();
     public statuses = new Subject<any>();
     public users = new Subject<any>();
-    public user = new Subject<any>();
     public regError = new Subject<any>();
     public logError = new Subject<any>();
     public updatedTaskStatus = new Subject<any>();

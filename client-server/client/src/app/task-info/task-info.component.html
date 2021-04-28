@@ -1,4 +1,4 @@
-<div *ngIf="task !== undefined && users !== undefined" class="task-info-block col-8">
+<div *ngIf="task !== undefined && users !== undefined" class="task-info-block col-sm-10 col-11">
     <h1 class="task-info-title">Task Info</h1>
     <div class="task-info">
         <div class="task-info-title-author">
@@ -39,7 +39,7 @@
             </div>
         </div>
     
-        <div class="mb-3">
+        <div class="col-12 mb-3">
             <label class="form-label">Deadline:</label>
             <input readonly type="text" name="task-deadline" [(ngModel)]="deadline" class="form-control">
             <input type="datetime-local" name="task-deadline" [(ngModel)]="task.deadline" class="form-control">
@@ -47,11 +47,11 @@
     
         <div class="col-12">
             <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-               <div class="task-file">
-                    <label class="form-label">File: {{filename}}</label>
-                    <button type="button" (click)=downloadFile() class="btn btn-outline-info">Download</button>
+               <div class="mb-3">
+                    <label class="mb-3 form-label">File: {{filename}}</label>
+                    <button type="button" (click)=downloadFile() class="mb-3 btn btn-outline-info">Download</button>
                     <div class="mb-3">
-                        <label class="form-label">New File: </label>
+                        <label class="form-label new-file-label">New File: </label>
                         <input type="file" name="fileInput" (change)="onFileSelect($event)">
                     </div>
                </div>

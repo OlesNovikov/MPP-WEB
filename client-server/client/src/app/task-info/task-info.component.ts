@@ -23,7 +23,7 @@ export class TaskInfoComponent implements OnInit {
     dateTime: Date = new Date();
     deadline = '';
     uploadForm: FormGroup;
-    filename = '';
+    filename = undefined;
 
     constructor(
         private httpService: HttpRequestService,
@@ -72,13 +72,15 @@ export class TaskInfoComponent implements OnInit {
     }
 
     downloadFile() {
-        this.httpService.getFile('file/download/' + this.filename, { responseType: "blob" })
+        if (this.filename) {
+            this.httpService.getFile('file/download/' + this.filename, { responseType: "blob" })
             .toPromise()
             .then(blob => {
                 console.log(blob);
                 saveAs(blob, this.filename);
             })
             .catch(err => console.error("download error = ", err));
+        }
     }
 
     getUsers() {
