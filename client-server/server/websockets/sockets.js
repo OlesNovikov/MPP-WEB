@@ -10,8 +10,6 @@ export const connectWs = async () => {
             const dataObj = JSON.parse(event);
             const data = dataObj.data;
 
-            console.log('request from client: ', event);
-
             switch (data.event) {
                 // POST /registration
                 case events.registration:
