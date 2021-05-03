@@ -14,6 +14,30 @@ export class RequestService {
         return new Response({ message: "ok" });
     }
 
+    async processHttp(request, response, next, isTokenRequired = false) {
+        try {
+            await DbConnector.connect();
+            let validateErrors = this.validate(request).filter(error => error);
+            if (validateErrors.length !== 0) {
+                console.log(`validate() error: ${ validateErrors }`);
+                send(response, new Response({ message: validateErrors, status: 400 }));
+                return;
+            }
+            
+            const currentUser = await this.authorisedUserHttp(request, isTokenRequired);
+            if (!currentUser) {
+                send(response, new Response({ message: ['Unauthorized access'], status: 401 }));
+                return;
+            }
+            
+            send(response, await this.action(request, response, next, currentUser));
+        }
+        catch(error) {
+            console.log(`process() error: ${ error }`);
+            send(response, new Response({ message: error, status: 500 }));
+        }
+    }
+
     async process(request, response, next, isTokenRequired = true) {
         try {
             await DbConnector.connect();
@@ -34,6 +58,16 @@ export class RequestService {
             console.log(`process() error: ${ error }`);
             return (response, new Response({ message: error, status: 500 }));
         }
+    }
+
+    async authorisedUserHttp(request, isTokenRequired) {
+        if (!isTokenRequired) {
+            return true;
+        }
+        
+        const token = request.headers.authorization;
+        const data = getMe(token);
+        return token ? await new UserController().readUser(data[0] || data) : null;
     }
 
     async authorisedUser(request, isTokenRequired) {

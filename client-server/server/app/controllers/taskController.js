@@ -20,7 +20,7 @@ export class TaskController extends DbController {
     }
 
     async updateTask(request) {
-        const model = request.body;
+        const model = request.body
         return await this.update(Task, {
             title: model.title,
             description: model.description,

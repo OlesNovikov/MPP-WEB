@@ -40,28 +40,68 @@ query RegisterUser($username: String!, $email: String!, $password: String!) {
 
 const GET_USERS = gql`
 query GetUsers() {
-    getUsers() {
+    users() {
         content {
             user {
                 password,
                 id,
                 username,
-                email,
-                updatedAt,
-                createdAt
-            },
-            token
+                email
+            }
         },
         status
     }
 }
 `;
 
-const GET_USER = gql``;
+const GET_TASKS = gql`
+query GetTasks() {
+    tasks() {
+        content {
+            title,
+            description,
+            filename,
+            deadline,
+            status {
+                name,
+                description
+            },
+            priority {
+                name
+            },
+            author {
+                id,
+                username,
+                email,
+            },
+            executor {
+                id,
+                username,
+                email
+            }
+        },
+        status
+    }
+}
+`;
+
+const GET_USER = gql`
+    query GetUser() {
+        tasks() {
+            content {
+                id,
+                username,
+                email
+            },
+            status
+        }
+    }
+`;
 
 export const Queries = {
     Login: POST_LOGIN,
     Register: POST_REGISTER,
     Users: GET_USERS,
-    CurrentUser: GET_USER
+    CurrentUser: GET_USER,
+    Tasks: GET_TASKS
 }
