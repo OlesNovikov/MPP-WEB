@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import { router } from './routes.js';
-import express from 'express';
+import express, { request, response } from 'express';
 import cors from 'cors';
 import { userServices } from './app/services/index.js';
 import { buildSchema } from 'graphql';
@@ -23,46 +23,27 @@ const schema = buildSchema(`
         content: UserToken,
         status: Int!
     },
+    type Users {
+        content: [User],
+        status: Int!
+    },
+    type CurrentUser {
+        content: User,
+        status: Int!
+    },
     type Query {
-        registerUser(email: String!, username: String!, password: String!): String,
+        registerUser(email: String!, username: String!, password: String!): Response,
         loginUser(email: String!, password: String!): Response,
-        getUsers: String,
-        getUser(token: String!): String
+        users(token: String): Users,
+        user(token: String): CurrentUser
     }
 `);
 
-async function registration(request, response, next, isTokenRequired) {
-    const obj = await userServices.registration.process(request, response, next, isTokenRequired);
-    const result = JSON.stringify(obj);
-    return result;
-}
-
-async function getUsers(request, response, next, isTokenRequired) {
-    const obj = await userServices.getList.process(request, response, next, isTokenRequired)
-    const result = JSON.stringify(obj);
-    return result;
-}
-
-async function getUser(request, response, next, isTokenRequired) {
-    const obj = await userServices.read.process(request, response, next, isTokenRequired)
-    const result = JSON.stringify(obj);
-    return result;
-}
-
 const rootResolver = {
-    registerUser: (request, response, next) => {
-        console.log('registerUser: ', request);
-        return registration(request, response, next, false);
-    },
+    registerUser: async (request, response, next) => await userServices.registration.process(request, response, next, false),
     loginUser: async (request, response, next) => await userServices.login.process(request, response, next, false),
-    getUsers: (request, response, next) => {
-        console.log('getUsers: ', request);
-        return getUsers(request, response, next, false);        // false --> true
-    },
-    getUser: async (request, response, next) => {
-        console.log('getUser: ', request);
-        return getUser(request, response, next, false);         // false --> true
-    }
+    users: async (request, response, next) => await userServices.getList.process(request, response, next, true),
+    user: async (request, response, next) => await userServices.read.process(request, response, next, true),
 }
 
 const graphql = graphqlHTTP({
@@ -76,7 +57,6 @@ const app = express()
     .use(cors())
     .use(bodyParser.json())
     .use('/graphql', graphql);
-    // .use(router);
 
 app.listen(port, () => {
     console.log(`Port ${port} is listening...`);

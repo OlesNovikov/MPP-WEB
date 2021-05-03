@@ -1,9 +1,6 @@
 import express, { request, response } from 'express';
 import multer from 'multer';
 import { storageConfig } from './app/services/file/upload.js';
-import { statusSerivces, taskServices, userServices, priorityServices, fileService } from './app/services/index.js';
-import { graphqlHTTP } from 'express-graphql';
-import { buildSchema } from 'graphql';
 export const router = express.Router();
 
 // router.post("/registration", (request, response, next) => userServices.registration.process(request, response, next, false));

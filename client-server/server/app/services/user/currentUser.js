@@ -5,9 +5,9 @@ import { RequestService } from "../requestService.js";
 
 export class CurrentUserService extends RequestService {
     async action(request, response, next) {
-        const token = request.headers.authorization;
+        const token = request.token;
         const data = getMe(token);
         const user = token ? await new UserController().readUser(data[0] || data) : null;
-        return new Response(user);
+        return new Response(user[0].dataValues);
     }
 }
