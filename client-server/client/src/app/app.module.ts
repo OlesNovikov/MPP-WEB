@@ -16,6 +16,8 @@ import { AlertClosableComponent } from './alert-closable/alert-closable.componen
 import { HeadersInterceptor } from './services/requestHeaders.service';
 import { TaskInfoComponent } from './task-info/task-info.component';
 import { TaskCreateComponent } from './task-create/task-create.component';
+import { GraphQLModule } from './graphql.module';
+import { Subscription } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { TaskCreateComponent } from './task-create/task-create.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GraphQLModule,
   ],
   providers: [
     HttpRequestService, {

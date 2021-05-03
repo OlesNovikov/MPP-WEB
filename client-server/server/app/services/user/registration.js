@@ -8,7 +8,7 @@ export class RegistrationService extends RequestService {
     validate(request) {
         const passMinLength = 4;
         const passMaxLength = 16;
-        const body = request.body;
+        const body = request;
         const validator = new Validator();
         return [
             validator.validateEmail(body.email), 
@@ -17,7 +17,7 @@ export class RegistrationService extends RequestService {
     }
 
     async action(request, response, next) {
-        const model = request.body;
+        const model = request;
         const users = await new UserController().registrate(model);
         return users[1] ? new Response({ user: users[0], token: getJWTToken(users) }) 
                         : new Response({ message: [`User with email ${ model.email } already exists`], status: 400 });

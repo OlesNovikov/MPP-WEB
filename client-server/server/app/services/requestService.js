@@ -16,25 +16,31 @@ export class RequestService {
 
     async process(request, response, next, isTokenRequired = true) {
         try {
+            // console.log('request: ', request);
+            // console.log('isTokenRequired: ', isTokenRequired);
             await DbConnector.connect();
             let validateErrors = this.validate(request).filter(error => error);
             if (validateErrors.length !== 0) {
                 console.log(`validate() error: ${ validateErrors }`);
-                send(response, new Response({ message: validateErrors, status: 400 }));
-                return;
+                return (response, new Response({ message: validateErrors, status: 400 }))
+                // send(response, new Response({ message: validateErrors, status: 400 }));
+                // return;
             }
             
             const currentUser = await this.authorisedUser(request, isTokenRequired);
             if (!currentUser) {
-                send(response, new Response({ message: ['Unauthorized access'], status: 401 }));
-                return;
+                return (response, new Response({ message: ['Unauthorized access'], status: 401 }));
+                // send(response, new Response({ message: ['Unauthorized access'], status: 401 }));
+                // return;
             }
-             
-            send(response, await this.action(request, response, next, currentUser));
+            
+            return await this.action(request, response, next, currentUser);
+            //send(response, await this.action(request, response, next, currentUser));
         }
         catch(error) {
             console.log(`process() error: ${ error }`);
-            send(response, new Response({ message: error, status: 500 }));
+            return (response, new Response({ message: error, status: 500 }));
+            // send(response, new Response({ message: error, status: 500 }));
         }
     }
 
