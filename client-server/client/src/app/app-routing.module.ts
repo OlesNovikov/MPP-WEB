@@ -6,12 +6,11 @@ import { RegistrationComponent } from './registration/registration.component';
 import { TaskCreateComponent } from './task-create/task-create.component';
 import { TaskInfoComponent } from './task-info/task-info.component';
 import { TasksComponent } from './tasks/tasks.component';
-import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'users', component: UsersComponent },
+//   { path: 'users', component: UsersComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/create', component: TaskCreateComponent },
   { path: 'tasks/:id', component: TaskInfoComponent },

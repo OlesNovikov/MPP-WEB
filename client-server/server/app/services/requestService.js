@@ -14,7 +14,7 @@ export class RequestService {
         return new Response({ message: "ok" });
     }
 
-    async processHttp(request, response, next, isTokenRequired = false) {
+    async processHttp(request, response, next, isTokenRequired = true) {
         try {
             await DbConnector.connect();
             let validateErrors = this.validate(request).filter(error => error);
@@ -51,7 +51,7 @@ export class RequestService {
             if (!currentUser) {
                 return (response, new Response({ message: ['Unauthorized access'], status: 401 }));
             }
-            
+        
             return await this.action(request, response, next, currentUser);
         }
         catch(error) {

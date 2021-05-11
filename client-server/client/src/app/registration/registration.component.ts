@@ -48,20 +48,4 @@ export class RegistrationComponent implements OnInit {
             }
         });
     }
-
-    //   registrateUser(user: User) {
-    //     this.httpService.post(`registration`, user).subscribe(data => {
-    //       this.user = data.user;
-    //       localStorage.setItem('userToken', data.token);
-    //       this.router.navigateByUrl('tasks');
-    //     },
-    //     (error) => {
-    //       console.log(error.error.message);
-    //       let message = ' ';
-    //       error.error.message.forEach((element: string) => {
-    //         message += element + '; ';
-    //       });
-    //       this.errorAlert = { isActive: true, message: message };
-    //     });
-    //   }
 }

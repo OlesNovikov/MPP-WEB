@@ -16,12 +16,14 @@ const schema = buildSchema(`
         createdAt: String!
     },
     type Status {
+        id: Int,
         name: String,
         description: String,
         createdAt: String,
         updatedAt: String
     },
     type Priority {
+        id: Int,
         name: String,
         createdAt: String,
         updatedAt: String
@@ -51,6 +53,10 @@ const schema = buildSchema(`
         executor_id: Int,
         createdAt: String,
         updatedAt: String,
+    },
+    type TaskInfo {
+        content: CreatedTask,
+        status: Int
     },
     type UserToken {
         user: User,
@@ -90,8 +96,8 @@ const schema = buildSchema(`
         users(token: String): Users,
         user(token: String): CurrentUser,
         tasks(token: String): Tasks,
-        createTask(title: String!, status_id: Int, desctiption: String, deadline: String, author_id: Int, executor_id: Int, priority_id: Int, token: String): TaskResponse,
-        task(token: String, id: Int): TaskResponse,
+        task(token: String, id: Int): TaskInfo,
+        createTask(title: String!, status_id: Int, description: String, deadline: String, author_id: Int, executor_id: Int, priority_id: Int, filename: String, token: String): TaskResponse,
         priorities(token: String): Priorities,
         statuses(token: String): Statuses
     }
@@ -100,13 +106,13 @@ const schema = buildSchema(`
 const rootResolver = {
     registerUser: async (request, response, next) => await userServices.registration.process(request, response, next, false),
     loginUser: async (request, response, next) => await userServices.login.process(request, response, next, false),
-    users: async (request, response, next) => await userServices.getList.process(request, response, next, true),
-    user: async (request, response, next) => await userServices.read.process(request, response, next, true),
-    tasks: async (request, response, next) => await taskServices.getList.process(request, response, next, true),
-    createTask: async (request, response, next) => await taskServices.create.process(request, response, next, true),
-    task: async (request, response, next) => await taskServices.read.process(request, response, next, true),
-    priorities: async (request, response, next) => await priorityServices.getList.process(request, response, next, true),
-    statuses: async (request, response, next) => await statusSerivces.getList.process(request, response, next, true)
+    users: async (request, response, next) => await userServices.getList.process(request, response, next),
+    user: async (request, response, next) => await userServices.read.process(request, response, next),
+    tasks: async (request, response, next) => await taskServices.getList.process(request, response, next),
+    createTask: async (request, response, next) => await taskServices.create.process(request, response, next),
+    task: async (request, response, next) => await taskServices.read.process(request, response, next),
+    priorities: async (request, response, next) => await priorityServices.getList.process(request, response, next),
+    statuses: async (request, response, next) => await statusSerivces.getList.process(request, response, next)
 }
 
 const graphql = graphqlHTTP({

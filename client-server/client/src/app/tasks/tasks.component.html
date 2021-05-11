@@ -5,7 +5,7 @@
   </button>
 </div>
 
-<div class="wrapper col-10">
+<div *ngIf="tasks !== undefined" class="wrapper col-10">
   <h1 class="task-page-title">Tasks List</h1>
 
   <button type="button" routerLink="/tasks/create" class="btn create-task-button btn-lg" data-target="#exampleModal">Create task</button>

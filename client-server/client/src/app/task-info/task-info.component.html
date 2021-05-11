@@ -1,9 +1,9 @@
-<div *ngIf="task !== undefined && users !== undefined" class="task-info-block col-8">
+<div *ngIf="task !== undefined && users !== undefined && priorities !== undefined && statuses !== undefined" class="task-info-block col-8">
     <h1 class="task-info-title">Task Info</h1>
     <div class="task-info">
         <div class="task-info-title-author">
             <div class="mb-3 col-6">
-                <input name="task-title" placeholder="Title" [(ngModel)]="task.title" class="form-control" id="exampleFormControlInput1">
+                <input name="task-title" placeholder="Title" [(ngModel)]="title" class="form-control" id="exampleFormControlInput1">
             </div>
     
             <div class="mb-3 col-4 task-author">
@@ -13,27 +13,27 @@
         </div>
     
         <div class="mb-3 col-12 task-description">
-            <textarea name="task-description" placeholder="Description" [(ngModel)]="task.description" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+            <textarea placeholder="Description" [(ngModel)]="description" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
         </div>
     
         <div class="task-selectable-info">
             <div class="task-executor">
                 <label class="form-label">Executor:</label>
-                <select class="form-select" [(ngModel)]="task.executor_id" aria-label="Default select example">
+                <select class="form-select" [(ngModel)]="executor_id" aria-label="Default select example">
                     <option name="executor-selector" *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
                 </select>
             </div>
         
             <div class="task-status">
                 <label class="form-label">Status:</label>
-                <select class="form-select" [(ngModel)]="task.status_id" aria-label="Default select example">
+                <select class="form-select" [(ngModel)]="status_id" aria-label="Default select example">
                     <option name="executor-selector" *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
                 </select>
             </div>
     
-            <div class="task-priority">
+            <div class="mb-3 task-priority">
                 <label class="form-label">Priority:</label>
-                <select class="form-select" [(ngModel)]="task.priority_id" aria-label="Default select example">
+                <select class="form-select" [(ngModel)]="priority_id" aria-label="Default select example">
                     <option name="executor-selector" *ngFor="let priority of priorities" [value]="priority.id">{{priority.name}}</option>
                 </select>
             </div>
@@ -42,7 +42,7 @@
         <div class="mb-3">
             <label class="form-label">Deadline:</label>
             <input readonly type="text" name="task-deadline" [(ngModel)]="deadline" class="form-control">
-            <input type="datetime-local" name="task-deadline" [(ngModel)]="task.deadline" class="form-control">
+            <input type="datetime-local" name="task-deadline" [(ngModel)]="new_deadline" class="form-control">
         </div>
     
         <div class="col-12">
